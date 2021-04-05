@@ -1,26 +1,63 @@
 module.exports = {
-  extends: 'erb/typescript',
-  rules: {
-    // A temporary hack related to IDE not resolving correct package.json
-    'import/no-extraneous-dependencies': 'off',
-  },
-  parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: 'module',
-    project: './tsconfig.json',
-    tsconfigRootDir: __dirname,
-    createDefaultProgram: true,
-  },
-  settings: {
-    'import/resolver': {
-      // See https://github.com/benmosher/eslint-plugin-import/issues/1396#issuecomment-575727774 for line below
-      node: {},
-      webpack: {
-        config: require.resolve('./configs/webpack.config.eslint.js'),
-      },
+    extends: [
+        'airbnb',
+    ],
+    parser: 'babel-eslint',
+    parserOptions: {
+        allowImportExportEverywhere: true,
     },
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    settings: {
+        'import/resolver': {
+            webpack: {
+                env: 'development',
+                config: '../webpack.renderer.base.js',
+            },
+        },
     },
-  },
+    env: {
+        'browser': true,
+        'shared-node-browser': true,
+    },
+    globals: {
+        "Generator": true,
+        "SyntheticMouseEvent": true,
+    },
+    plugins: [],
+    rules: {
+        'import/no-extraneous-dependencies': 'off',
+        'import/prefer-default-export': 'off',
+        'react/forbid-prop-types': 'off',
+        'react/destructuring-assignment': 'off',
+        'react/jsx-one-expression-per-line': 'off',
+        'jsx-a11y/no-static-element-interactions': 'off',
+        'jsx-a11y/click-events-have-key-events': 'off',
+        'jsx-a11y/anchor-is-valid': 'off',
+        'no-console': 'off',
+        'no-underscore-dangle': [
+            'error',
+            {
+                allow: [
+                    '__CLEAR_ALL_REDUCERS__',
+                    '__REDUX_DEVTOOLS_EXTENSION_COMPOSE__',
+                ],
+            },
+        ],
+        'function-paren-newline': [
+            'error',
+            'consistent',
+        ],
+        'object-curly-newline': [
+            'error',
+            {
+                ObjectExpression: {
+                    consistent: true,
+                },
+                ObjectPattern: {
+                    multiline: true,
+                },
+                ImportDeclaration: 'always',
+                ExportDeclaration: 'always'
+            }
+        ],
+    },
 };
